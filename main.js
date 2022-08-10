@@ -33,6 +33,7 @@ function preload() {
 
 let platforms = null;
 let player = null;
+let cursors = null;
 
 function create() {
   this.add.image(400, 300, "sky");
@@ -70,5 +71,25 @@ function create() {
   });
 
   this.physics.add.collider(player, platforms);
+  //Player movement
+  cursors = this.input.keyboard.createCursorKeys();
 }
-function update() {}
+function update() {
+  if (cursors.left.isDown) {
+    player.setVelocityX(-160);
+
+    player.anims.play("left", true);
+  } else if (cursors.right.isDown) {
+    player.setVelocityX(160);
+
+    player.anims.play("right", true);
+  } else {
+    player.setVelocityX(0);
+
+    player.anims.play("turn");
+  }
+
+  if (cursors.up.isDown && player.body.touching.down) {
+    player.setVelocityY(-330);
+  }
+}
